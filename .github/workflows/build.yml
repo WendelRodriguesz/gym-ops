@@ -3,9 +3,9 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*.*.*'  # Roda apenas quando um push de tag de versão é feito
+      - 'v*.*.*'
   release:
-    types: [created]  # Também roda quando um Release é criado no GitHub
+    types: [created]
 
 jobs:
   build:
@@ -34,15 +34,17 @@ jobs:
           npm run build
           npm run dist
 
-      - name: Fazer upload dos artefatos
+      - name: Fazer upload dos artefatos (para Debug)
         uses: actions/upload-artifact@v2
         with:
           name: build-${{ runner.os }}
           path: Front/dist/
 
-      - name: Upload dos pacotes para o Release do GitHub
+      - name: Upload dos pacotes `.deb` e `.exe` para o Release do GitHub
         uses: softprops/action-gh-release@v1
         with:
-          files: Front/dist/**
+          files: |
+            Front/dist/*.deb
+            Front/dist/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
