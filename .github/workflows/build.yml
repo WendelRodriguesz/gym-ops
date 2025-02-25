@@ -16,12 +16,12 @@ jobs:
 
     steps:
       - name: Checar código
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Configurar Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: Instalar dependências
         run: |
@@ -35,7 +35,7 @@ jobs:
           npm run dist
 
       - name: Fazer upload dos artefatos (para Debug)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ runner.os }}
           path: Front/dist/
